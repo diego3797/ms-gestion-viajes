@@ -9,9 +9,9 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 @Configuration
 @OpenAPIDefinition(info = @Info(
-        title = "Springweb",
+        title = "Gestion de Viajes",
         version = "1.0",
-        description = "swagger"
+        description = "API's para la gestion de viajes"
 ))
 public class SwaggerConfiguration {
 

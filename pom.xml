@@ -86,9 +86,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>
-			springboot-msgestionviajes-docker
-		</finalName>
+		<finalName>app-msgestionviajes</finalName>
 	</build>
 
 </project>

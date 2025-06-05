@@ -1,0 +1,20 @@
+#Api
+server:
+  port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://admin:admin@localhost:27017/bdTest?authSource=admin
+      socketTimeout: 60000
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    display-request-duration: true

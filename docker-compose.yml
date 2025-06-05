@@ -2,33 +2,48 @@ version: "3.7"
 
 services:
   # MongoDB
-  mongo:
-    container_name: servermongodb
+  mongo-database:
+    container_name: mongo-database
     image: mongo:latest
     ports:
       - "27017:27017"
     env_file:
       - .env
+    networks:
+      - backend
 
   # Carga inicial de json a BD
   mongo-carga:
+    container_name:  mongo-carga
     env_file:
       - .env
     build:
-      context: /cargaData
+      context:  ./cargaData
       dockerfile: Dockerfile
       args:
         - DATABASE_URI=$DATABASE_URI
         - USERNAME=$MONGO_INITDB_ROOT_USERNAME
         - PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
     depends_on:
-      - mongo
+      - mongo-database
+    networks:
+      - backend
 
   # Api
   api-springboot:
     container_name: api-msgestionviajes
-    image: dixgo/api-msgestionviajes:v1
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "9092:8080"
-    links:
-      - mongo
+      - "8080:8080"
+    depends_on:
+      - mongo-database
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    networks:
+        - backend
+
+networks:
+  backend:
+    driver: bridge

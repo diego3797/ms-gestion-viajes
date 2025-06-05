@@ -1,5 +1,6 @@
 package com.prueba.msgestionviajes.controller;
 
+import com.prueba.msgestionviajes.dto.DatosDTO;
 import com.prueba.msgestionviajes.dto.ViajeDTO;
 import com.prueba.msgestionviajes.model.Viaje;
 import com.prueba.msgestionviajes.service.ViajesService;
@@ -18,37 +19,43 @@ public class ViajeController {
 
     @Operation(summary = "", description = "consulta la cantidad total de viajes")
     @GetMapping
-    public Mono<Long> consultarTotal(){
+    public Mono<DatosDTO> consultarTotal() {
         return service.getTotalViajes();
     }
 
     @Operation(summary = "/ciudad/{ciudad}", description = "consulta la cantidad total de viajes por ciudad")
     @GetMapping("/ciudad/{ciudad}")
-    public Mono<Long> consultarViajesByCiudad(@PathVariable("ciudad") String ciudad){
+    public Mono<DatosDTO> consultarViajesByCiudad(@PathVariable("ciudad") String ciudad) {
         return service.getCantViajesByCiudad(ciudad);
     }
 
     @Operation(summary = "/pais/{pais}", description = "consulta la cantidad total de viajes por pais")
     @GetMapping("/pais/{pais}")
-    public Mono<Long> consultarViajesByPais(@PathVariable("pais") String pais){
+    public Mono<DatosDTO> consultarViajesByPais(@PathVariable("pais") String pais) {
         return service.getCantViajesByPais(pais);
     }
 
     @Operation(summary = "", description = "crear viaje")
     @PostMapping
-    public Mono<ViajeDTO> crear(@RequestBody ViajeDTO viaje){
+    public Mono<ViajeDTO> crear(@RequestBody ViajeDTO viaje) {
         return service.crearViaje(viaje);
     }
 
-    @Operation(summary = "/actualiza/{id}", description = "actualizar viaje")
-    @PutMapping("/actualiza/{id}")
-    public Mono<ViajeDTO> actualizar(@RequestBody ViajeDTO viaje, @PathVariable String id){
+    @Operation(summary = "/{id}", description = "actualizar viaje")
+    @PutMapping("/{id}")
+    public Mono<ViajeDTO> actualizar(@RequestBody ViajeDTO viaje, @PathVariable String id) {
         return service.actualizarViaje(id, viaje);
+    }
+
+    @Operation(summary = "/{id}", description = "eliminar viaje")
+    @DeleteMapping("/{id}")
+    public Mono<Void> eliminar(@PathVariable String id) {
+        return service.eliminarViaje(id);
     }
 
     @Operation(summary = "/actuales", description = "consulta viajes actuales (estado = started)")
     @GetMapping("/actuales")
-    public Flux<Viaje> consultarViajesActuales(){
+    public Flux<Viaje> consultarViajesActuales() {
         return service.getViajesActuales();
     }
 
